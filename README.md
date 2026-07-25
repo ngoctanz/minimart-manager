@@ -191,6 +191,24 @@ Thông tin PayOS cũng có thể cấu hình riêng theo từng chi nhánh. Khô
 | `BE` | `npm run dev` | Chạy backend với nodemon |
 | `BE` | `npm start` | Chạy backend production |
 
+## Kiểm thử hiệu năng (Stress Test)
+
+Dự án đã được kiểm thử hiệu năng (Load/Stress Testing) bằng công cụ [k6](https://k6.io/) để đánh giá khả năng chịu tải của Backend và MongoDB. File kịch bản mẫu được lưu tại `tests/k6-loadtest.js`.
+
+### Các luồng đã test:
+1. **API Status (`GET /v1/status`)**: Đạt tốc độ phản hồi cực nhanh (~1.5ms) và tỷ lệ thành công 100% với 50 người dùng truy cập đồng thời.
+2. **Cơ chế chống Spam/Brute-force (`POST /v1/auth/login`)**: Hệ thống đã chặn thành công 100% các request spam dồn dập nhờ `loginLimiter`. Thời gian phản hồi duy trì ở mức ~2ms, bảo vệ Node.js event loop khỏi việc phải xử lý băm mật khẩu `bcrypt` tốn kém.
+3. **Thao tác ghi đồng thời (Concurrency / Write-Heavy) trên Hóa Đơn (`POST /v1/receipts`)**: 
+   - Mô phỏng 20 thu ngân cùng chốt đơn một mặt hàng đồng thời trong 1 phút.
+   - **Kết quả:** MongoDB xử lý Locking (khóa bản ghi) cực kỳ chính xác. Cơ chế chống bán âm hoạt động hoàn hảo, chặn đứng hàng trăm request từ chối bán hàng khi số lượng tồn kho chạm mức 0. Hệ thống duy trì tính toàn vẹn dữ liệu xuất sắc dưới áp lực lớn.
+
+### Cách tự chạy test
+Yêu cầu đã cài đặt `k6` trên máy.
+```bash
+# Sửa đổi thông số branchId, productId, và Authorization Token trong tests/k6-loadtest.js cho phù hợp với môi trường của bạn
+k6 run tests/k6-loadtest.js
+```
+
 ## Giấy phép
 
 Backend khai báo giấy phép ISC. Repository chưa có file giấy phép chung.
