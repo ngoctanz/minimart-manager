@@ -29,6 +29,7 @@ const START_SERVER = () => {
         
         const allowedOrigins = [
           "http://localhost:3000",
+          "https://smartpos.ngoctanz.dev",
           clientUrl
         ].filter(Boolean);
 
@@ -38,7 +39,7 @@ const START_SERVER = () => {
         // Nới lỏng CORS: Cho phép nếu origin match với config, 
         // HOẶC nếu đây là vercel domain (để hỗ trợ deploy demo dễ dàng)
         if (
-          allowedOrigins.some((o) => origin.startsWith(o) || o.startsWith(origin)) || 
+          allowedOrigins.includes(origin) ||
           origin.includes("vercel.app")
         ) {
           callback(null, true); // Chấp nhận

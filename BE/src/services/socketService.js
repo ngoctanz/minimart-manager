@@ -18,7 +18,7 @@ export const initializeSocket = (server) => {
     cors: {
       origin: (origin, callback) => {
         // Cho phép tất cả trên môi trường demo, hoặc kiểm tra thủ công giống server.js
-        if (!origin || origin.includes("localhost") || origin.includes("vercel.app") || origin === process.env.CLIENT_URL?.replace(/\/$/, "")) {
+        if (!origin || origin === "http://localhost:3000" || origin === "https://smartpos.ngoctanz.dev" || origin.includes("vercel.app") || origin === process.env.CLIENT_URL?.replace(/\/$/, "")) {
           callback(null, true);
         } else {
           callback(null, false);
