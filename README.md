@@ -2,7 +2,7 @@
 
 Hệ thống demo quản lý bán hàng và kho dành cho cửa hàng bán lẻ, hỗ trợ nghiệp vụ tại quầy, nhập hàng, quản lý tồn kho, nhiều chi nhánh và báo cáo doanh thu.
 
-**Demo:** [smart-pos-demo.vercel.app](https://smart-pos-demo.vercel.app)
+**Demo:** [https://smartpos.ngoctanz.dev](https://smartpos.ngoctanz.de)
 
 ![Trang chủ SmartPOS](FE/public/images/demo/Screenshot%20From%202026-07-24%2016-56-09.png)
 
